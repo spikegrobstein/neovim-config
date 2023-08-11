@@ -8,3 +8,5 @@ opt.relativenumber = false -- Relative line numbers
 
 vim.api.nvim_command("packadd termdebug")
 vim.g.termdebugger = "rust-gdb"
+
+vim.b.autoformat = false
