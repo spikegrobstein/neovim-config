@@ -30,3 +30,8 @@ map("n", "<leader>gb", ":Git blame<CR>", { desc = "Git blame", remap = true })
 map("c", "<C-A>", "<C-B>", { desc = "^A should work like in terminal" })
 
 map({"n", "v"}, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comments" })
+
+-- rust keybindings... should make this only valid for rust files
+map("n", "<F4>", "<cmd>RustOpenExternalDocs<cr>", { desc = "Open documentation", remap = false })
+map("n", "<F5>", "<cmd>RustReloadWorkspace<CR>", { desc = "Reload the rust workspace", remap = false })
+map("n", "<F6>", "<cmd>RustCodeAction<CR>", { desc = "Show code action menu.", remap = false })
