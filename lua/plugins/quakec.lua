@@ -1,0 +1,3 @@
+return {
+  "drzel/quakec.vim"
+}
