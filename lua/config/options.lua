@@ -4,8 +4,9 @@
 
 local opt = vim.opt
 
-opt.relativenumber = false -- Relative line numbers
+opt.relativenumber = false -- Relative line numbers OFF
 
+-- rust debugging support
 vim.api.nvim_command("packadd termdebug")
 vim.g.termdebugger = "rust-gdb"
 
