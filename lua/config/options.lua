@@ -5,3 +5,6 @@
 local opt = vim.opt
 
 opt.relativenumber = false -- Relative line numbers
+
+vim.api.nvim_command("packadd termdebug")
+vim.g.termdebugger = "rust-gdb"
