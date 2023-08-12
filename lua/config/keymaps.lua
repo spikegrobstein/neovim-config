@@ -35,3 +35,15 @@ map({"n", "v"}, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comments"
 map("n", "<F4>", "<cmd>RustOpenExternalDocs<cr>", { desc = "Open documentation", remap = false })
 map("n", "<F5>", "<cmd>RustReloadWorkspace<CR>", { desc = "Reload the rust workspace", remap = false })
 map("n", "<F6>", "<cmd>RustCodeAction<CR>", { desc = "Show code action menu.", remap = false })
+
+map("n", "gt", "<cmd>bnext<cr>", { desc = "Next buffer" })
+map("n", "gT", "<cmd>bprev<cr>", { desc = "Previous buffer" })
+
+vim.keymap.del("n", "<leader>ft", { remap = true })
+vim.keymap.del("n", "<leader>fT", { remap = true })
+vim.keymap.del("n", "<leader>fn", { remap = true })
+vim.keymap.del("n", "<leader>fb", { remap = true })
+vim.keymap.del("n", "<leader>fF", { remap = true })
+vim.keymap.del("n", "<leader>ff", { remap = true })
+vim.keymap.del("n", "<leader>fr", { remap = true })
+vim.keymap.del("n", "<leader>fR", { remap = true })
