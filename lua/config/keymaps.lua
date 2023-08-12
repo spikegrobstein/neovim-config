@@ -3,42 +3,6 @@
 -- Add any additional keymaps here
 --
 
--- local map = vim.map
-
-local map = vim.keymap.set
-
--- experiemtnal navigation for completion
--- map("i", "<expr><C-j>", 'pumvisible() ? "\\<C-n>" : "<C-j>"', { desc = "Move to next item in popups", remap = false })
--- map("i", "<expr><C-k>", 'pumvisible() ? "\\<C-p>" : "<C-k>"', { desc = "Move to next item in popups", remap = false })
-
--- vertical split
-map("n", "<leader>v", "<C-W>v", { desc = "Split window right", remap = true })
-
--- clear hlsearch
-map("n", "<leader><leader>", ':nohlsearch<Bar>:echo<CR>""', { desc = "Clear search highlight", remap = false })
-
--- fuzzy-finder
-map("n", "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", { desc = "Fuzzy find files", remap = true})
-
--- create tab
-map("n", "<leader>t", ":tabedit<CR>", { desc = "Create new tab", remap = true })
-
--- close entire tab
-map("n", "<leader>x", ":tabclose<CR>", { desc = "Close entire tab", remap = true })
-
-map("n", "<leader>gb", ":Git blame<CR>", { desc = "Git blame", remap = true })
-map("c", "<C-A>", "<C-B>", { desc = "^A should work like in terminal" })
-
-map({"n", "v"}, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comments" })
-
--- rust keybindings... should make this only valid for rust files
-map("n", "<F4>", "<cmd>RustOpenExternalDocs<cr>", { desc = "Open documentation", remap = false })
-map("n", "<F5>", "<cmd>RustReloadWorkspace<CR>", { desc = "Reload the rust workspace", remap = false })
-map("n", "<F6>", "<cmd>RustCodeAction<CR>", { desc = "Show code action menu.", remap = false })
-
-map("n", "gt", "<cmd>bnext<cr>", { desc = "Next buffer" })
-map("n", "gT", "<cmd>bprev<cr>", { desc = "Previous buffer" })
-
 vim.keymap.del("n", "<leader>ft", { remap = true })
 vim.keymap.del("n", "<leader>fT", { remap = true })
 vim.keymap.del("n", "<leader>fn", { remap = true })
@@ -47,3 +11,46 @@ vim.keymap.del("n", "<leader>fF", { remap = true })
 vim.keymap.del("n", "<leader>ff", { remap = true })
 vim.keymap.del("n", "<leader>fr", { remap = true })
 vim.keymap.del("n", "<leader>fR", { remap = true })
+
+local map = vim.keymap.set
+
+-- experiemtnal navigation for completion
+-- map("i", "<expr><C-j>", 'pumvisible() ? "\\<C-n>" : "<C-j>"', { desc = "Move to next item in popups", remap = false })
+-- map("i", "<expr><C-k>", 'pumvisible() ? "\\<C-p>" : "<C-k>"', { desc = "Move to next item in popups", remap = false })
+
+-- clear hlsearch
+map("n", "<leader><leader>", ':nohlsearch<Bar>:echo<CR>""', { desc = "Clear search highlight", remap = false })
+
+-- vertical split
+map("n", "<leader>v", "<C-W>v", { desc = "Split window right", remap = true })
+
+-- create tab
+map("n", "<leader>t", ":tabedit<CR>", { desc = "Create new tab", remap = true })
+
+-- close entire tab
+map("n", "<leader>x", ":tabclose<CR>", { desc = "Close entire tab", remap = true })
+
+-- git blame
+map("n", "<leader>gb", ":Git blame<CR>", { desc = "Git blame", remap = true })
+
+-- ctrl-a to move to beginning of command
+map("c", "<C-A>", "<C-B>", { desc = "^A should work like in terminal" })
+
+-- comment toggle
+map({ "n", "v" }, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comments" })
+
+-- fuzzy-finder
+map("n", "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", { desc = "Fuzzy find files", remap = true })
+
+-- rust keybindings... this is only valid for rust files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "rust" },
+  callback = function()
+    map("n", "<F4>", "<cmd>RustOpenExternalDocs<cr>", { desc = "Open documentation", remap = false })
+    map("n", "<F5>", "<cmd>RustReloadWorkspace<CR>", { desc = "Reload the rust workspace", remap = false })
+    map("n", "<F6>", "<cmd>RustCodeAction<CR>", { desc = "Show code action menu.", remap = false })
+
+    map("n", "gt", "<cmd>bnext<cr>", { desc = "Next buffer" })
+    map("n", "gT", "<cmd>bprev<cr>", { desc = "Previous buffer" })
+  end,
+})
