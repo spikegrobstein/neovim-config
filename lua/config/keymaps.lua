@@ -40,7 +40,14 @@ map("c", "<C-A>", "<C-B>", { desc = "^A should work like in terminal" })
 map({ "n", "v" }, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comments" })
 
 -- fuzzy-finder
-map("n", "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", { desc = "Fuzzy find files", remap = true })
+--map("n", "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", { desc = "Fuzzy find files", remap = true })
+
+map(
+  "n",
+  "<leader>f",
+  require("lazyvim.util").telescope("files", { preview = false }),
+  { desc = "Fuzzy find files", remap = true }
+)
 
 -- rust keybindings... this is only valid for rust files
 vim.api.nvim_create_autocmd("FileType", {
