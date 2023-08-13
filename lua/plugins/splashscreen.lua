@@ -2,6 +2,7 @@ return {
   "goolord/alpha-nvim",
   opts = function()
     local dashboard = require("alpha.themes.dashboard")
+    -- figlet -f Bloody neovim
     local logo = [[
  ███▄    █ ▓█████  ▒█████   ██▒   █▓ ██▓ ███▄ ▄███▓
  ██ ▀█   █ ▓█   ▀ ▒██▒  ██▒▓██░   █▒▓██▒▓██▒▀█▀ ██▒
