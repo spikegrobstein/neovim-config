@@ -3,6 +3,7 @@
 -- Add any additional keymaps here
 --
 
+-- unmap default keys
 vim.keymap.del("n", "<leader>ft", { remap = true })
 vim.keymap.del("n", "<leader>fT", { remap = true })
 vim.keymap.del("n", "<leader>fn", { remap = true })
@@ -42,6 +43,10 @@ map({ "n", "v" }, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comment
 -- fuzzy-finder
 --map("n", "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", { desc = "Fuzzy find files", remap = true })
 
+-- next and previous tabs
+map("n", "gt", "<cmd>bnext<cr>", { desc = "Next buffer" })
+map("n", "gT", "<cmd>bprev<cr>", { desc = "Previous buffer" })
+
 map(
   "n",
   "<leader>f",
@@ -56,8 +61,5 @@ vim.api.nvim_create_autocmd("FileType", {
     map("n", "<F4>", "<cmd>RustOpenExternalDocs<cr>", { desc = "Open documentation", remap = false })
     map("n", "<F5>", "<cmd>RustReloadWorkspace<CR>", { desc = "Reload the rust workspace", remap = false })
     map("n", "<F6>", "<cmd>RustCodeAction<CR>", { desc = "Show code action menu.", remap = false })
-
-    map("n", "gt", "<cmd>bnext<cr>", { desc = "Next buffer" })
-    map("n", "gT", "<cmd>bprev<cr>", { desc = "Previous buffer" })
   end,
 })
