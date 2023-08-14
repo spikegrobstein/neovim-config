@@ -44,8 +44,8 @@ map({ "n", "v" }, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comment
 --map("n", "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", { desc = "Fuzzy find files", remap = true })
 
 -- next and previous tabs
-map("n", "gt", "<cmd>bnext<cr>", { desc = "Next buffer" })
-map("n", "gT", "<cmd>bprev<cr>", { desc = "Previous buffer" })
+map("n", "gt", "<cmd>BufferLineCycleNext<cr>", { desc = "Next tab" })
+map("n", "gT", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous tab" })
 
 map(
   "n",
