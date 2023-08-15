@@ -13,6 +13,14 @@ vim.keymap.del("n", "<leader>ff", { remap = true })
 vim.keymap.del("n", "<leader>fr", { remap = true })
 vim.keymap.del("n", "<leader>fR", { remap = true })
 
+-- unmap the "move line" bindings.
+vim.keymap.del("n", "<A-j>", {remap = true})
+vim.keymap.del("n", "<A-k>", {remap = true})
+vim.keymap.del("i", "<A-j>", {remap = true})
+vim.keymap.del("i", "<A-k>", {remap = true})
+vim.keymap.del("v", "<A-j>", {remap = true})
+vim.keymap.del("v", "<A-k>", {remap = true})
+
 local map = vim.keymap.set
 
 -- experiemtnal navigation for completion
