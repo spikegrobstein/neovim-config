@@ -3,6 +3,7 @@
 -- Add any additional options here
 
 vim.opt.relativenumber = false -- Relative line numbers OFF
+vim.opt.ignorecase = false -- be case-sensitive when searching
 
 -- rust debugging support
 vim.api.nvim_command("packadd termdebug")
