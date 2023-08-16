@@ -5,7 +5,7 @@
 vim.opt.relativenumber = false -- Relative line numbers OFF
 vim.opt.ignorecase = false -- be case-sensitive when searching
 vim.opt.clipboard = "" -- don't use the system clipboard
-vim.opt.spelllang = "" -- disable spellchecking.
+vim.opt.spelllang = {} -- disable spellchecking.
 vim.opt.conceallevel = 0 -- disable concealing quotes/backticks
 
 -- rust debugging support
