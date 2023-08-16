@@ -4,6 +4,7 @@
 
 vim.opt.relativenumber = false -- Relative line numbers OFF
 vim.opt.ignorecase = false -- be case-sensitive when searching
+vim.opt.clipboard = "" -- don't use the system clipboard
 
 -- rust debugging support
 vim.api.nvim_command("packadd termdebug")
