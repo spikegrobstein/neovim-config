@@ -70,12 +70,19 @@ map(
   { desc = "Fuzzy find files", remap = true }
 )
 
+local format = function()
+  require("lazyvim.plugins.lsp.format").format({ force = true })
+end
+
 -- rust keybindings... this is only valid for rust files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "rust" },
   callback = function()
-    map("n", "<F4>", "<cmd>RustOpenExternalDocs<cr>", { desc = "Open documentation", remap = false })
-    map("n", "<F5>", "<cmd>RustReloadWorkspace<CR>", { desc = "Reload the rust workspace", remap = false })
-    map("n", "<F6>", "<cmd>RustCodeAction<CR>", { desc = "Show code action menu.", remap = false })
+    map("n", "<F4>", "<cmd>RustOpenExternalDocs<cr>", { desc = "Open documentation", remap = true })
+    map("n", "<F5>", "<cmd>RustReloadWorkspace<CR>", { desc = "Reload the rust workspace", remap = true })
+    map("n", "<F6>", "<cmd>RustCodeAction<CR>", { desc = "Show code action menu.", remap = true })
   end,
 })
+
+-- map F8 to formatting documents.
+map("n", "<F8>", format, { desc = "Format document", remap = true })
