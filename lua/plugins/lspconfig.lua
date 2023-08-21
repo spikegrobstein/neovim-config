@@ -8,6 +8,10 @@ return {
           Lua = {
             format = {
               enable = true,
+              defaultConfig = {
+                indent_style = "space",
+                indent_size = "2",
+              },
             },
             diagnostics = {
               neededFileStatus = {
