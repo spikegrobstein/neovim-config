@@ -84,5 +84,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "typescript", "javascript" },
+  callback = function()
+    local opts = { noremap = true, silent = true }
+    map("n", "<F2>", ":lua require('neogen').generate()<CR>", opts)
+    map("n", "<F8>", "<cmd>EslintFixAll<cr>", { desc = "Format document", remap = true })
+  end
+})
+
 -- map F8 to formatting documents.
 map("n", "<F8>", format, { desc = "Format document", remap = true })
+
