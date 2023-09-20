@@ -13,6 +13,8 @@ vim.keymap.del("n", "<leader>ff", { remap = true })
 vim.keymap.del("n", "<leader>fr", { remap = true })
 vim.keymap.del("n", "<leader>fR", { remap = true })
 
+vim.keymap.del("n", "<leader><space>", { remap = true })
+
 -- unmap the "move line" bindings.
 vim.keymap.del("n", "<A-j>", { remap = true })
 vim.keymap.del("n", "<A-k>", { remap = true })
@@ -63,16 +65,19 @@ map({ "n", "v" }, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comment
 map("n", "gt", "<cmd>BufferLineCycleNext<cr>", { desc = "Next tab" })
 map("n", "gT", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous tab" })
 
+local format = function()
+  require("lazyvim.plugins.lsp.format").format({ force = true })
+end
+
+-- map F8 to formatting documents.
+map("n", "<F8>", format, { desc = "Format document", remap = true })
+
 map(
   "n",
   "<leader>f",
   require("lazyvim.util").telescope("files", { preview = false }),
   { desc = "Fuzzy find files", remap = true }
 )
-
-local format = function()
-  require("lazyvim.plugins.lsp.format").format({ force = true })
-end
 
 -- rust keybindings... this is only valid for rust files
 vim.api.nvim_create_autocmd("FileType", {
@@ -92,7 +97,4 @@ vim.api.nvim_create_autocmd("FileType", {
     map("n", "<F8>", "<cmd>EslintFixAll<cr>", { desc = "Format document", remap = true })
   end
 })
-
--- map F8 to formatting documents.
-map("n", "<F8>", format, { desc = "Format document", remap = true })
 
