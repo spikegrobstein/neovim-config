@@ -65,12 +65,13 @@ map({ "n", "v" }, "<C-_>", "<plug>NERDCommenterToggle", { desc = "Toggle comment
 map("n", "gt", "<cmd>BufferLineCycleNext<cr>", { desc = "Next tab" })
 map("n", "gT", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous tab" })
 
-local format = function()
-  require("lazyvim.plugins.lsp.format").format({ force = true })
-end
+-- map F5 to reload the LSP
+map("n", "<F5>", ":LspRestart<cr>", { desc = "Restart LSP" })
 
 -- map F8 to formatting documents.
-map("n", "<F8>", format, { desc = "Format document", remap = true })
+map("n", "<F8>", function()
+  require("lazyvim.util").format({ force = true })
+end, { desc = "Format document", remap = true })
 
 map(
   "n",
@@ -95,6 +96,5 @@ vim.api.nvim_create_autocmd("FileType", {
     local opts = { noremap = true, silent = true }
     map("n", "<F2>", ":lua require('neogen').generate()<CR>", opts)
     map("n", "<F8>", "<cmd>EslintFixAll<cr>", { desc = "Format document", remap = true })
-  end
+  end,
 })
-
