@@ -39,11 +39,17 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.o.wrap = false
+vim.opt.wrap = false
 
-vim.o.list = true
-vim.o.splitbelow = true
-vim.o.splitright = true
-vim.o.smartindent = true
+vim.opt.list = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.smartindent = true
 
---vim.cmd.colorscheme = 'tokyonight'
+vim.opt.smartindent = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.pumblend = 10
+vim.opt.winminwidth = 5
+
+vim.cmd.colorscheme 'tokyonight'

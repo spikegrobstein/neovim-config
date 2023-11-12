@@ -1,3 +1,5 @@
+-- additional config for completion
+
 local cmp_window = require("cmp.config.window")
 
 return {
@@ -11,8 +13,9 @@ return {
         winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
       }),
     },
-    mapping = {
-      ["<CR>"] = vim.NIL,
-    },
+    --mapping = {
+      ---- pressing return should not select item
+      --["<CR>"] = vim.NIL,
+    --},
   },
 }
