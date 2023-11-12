@@ -12,7 +12,7 @@ quotes, curlies, etc, don't automatically close when typing
 
 autocomplete completes with a carriage return. we don't want that. need ^Y to complete.
 
-## indentation
+## [done] indentation
 
 still doesn't work properly. a new if statement doesn't indent for example
 
@@ -38,4 +38,10 @@ F8 to format
 
 is typescript working?
 
-## invisible files not in fuzzy find window
+## [done] invisible files not in fuzzy find window
+
+this either shows invisible files including the .git directory or it shows no invisible files at all.
+
+## resize splits when resizing window
+
+## bash insert do/done case/esac then/fi
