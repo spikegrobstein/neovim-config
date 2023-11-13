@@ -10,6 +10,7 @@ return {
       "markdown",
       "markdown_inline",
       "regex",
+      "rust",
       "typescript",
       "tsx",
       "vim",
