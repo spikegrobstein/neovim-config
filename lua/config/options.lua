@@ -42,4 +42,8 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.winminwidth = 5
 
+-- rust debugging support
+vim.api.nvim_command("packadd termdebug")
+vim.g.termdebugger = "rust-gdb"
+
 vim.cmd.colorscheme 'tokyonight'

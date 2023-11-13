@@ -127,14 +127,14 @@ require('lazy').setup({
   },
 
   --{
-    ---- Add indentation guides even on blank lines
-    --'lukas-reineke/indent-blankline.nvim',
-    ---- Enable `lukas-reineke/indent-blankline.nvim`
-    ---- See `:help ibl`
-    --main = 'ibl',
-    --opts = {
-      --scope = { enabled = false },
-    --},
+  ---- Add indentation guides even on blank lines
+  --'lukas-reineke/indent-blankline.nvim',
+  ---- Enable `lukas-reineke/indent-blankline.nvim`
+  ---- See `:help ibl`
+  --main = 'ibl',
+  --opts = {
+  --scope = { enabled = false },
+  --},
   --},
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -171,13 +171,14 @@ require('lazy').setup({
 }, {
 })
 
-require 'config.options'
-require 'config.keymaps'
-
 require 'config.treesitter'
 require 'config.completion'
 require 'config.telescope'
 require 'config.lsp'
+require 'config.rust'
+
+require 'config.options'
+require 'config.keymaps'
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

@@ -49,3 +49,7 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = tr
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
 
 vim.keymap.set("n", "<leader>l", ":Lazy<CR>", { desc = "Open Lazy" })
+
+-- map F8 to formatting documents.
+vim.keymap.set("n", "<F8>", vim.lsp.buf.format, { desc = "Format document", remap = true })
+
