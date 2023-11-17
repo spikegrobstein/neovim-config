@@ -12,7 +12,7 @@ vim.opt.conceallevel = 0 -- disable concealing quotes/backticks
 vim.api.nvim_command("packadd termdebug")
 vim.g.termdebugger = "rust-gdb"
 
-vim.b.autoformat = false
+vim.g.autoformat = false
 
 -- disable highlight of current indentation
 vim.g.miniindentscope_disable = true
