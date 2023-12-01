@@ -8,10 +8,10 @@ return {
       inlay_hints = {
         auto = true,
         only_current_line = false,
-        show_parameter_hints = true,
+        show_parameter_hints = false,
         parameter_hints_prefix = '<- ',
         other_hints_prefix = '=> ',
-        highlight = 'Comment',
+        highlight = 'LspInlayHint',
       },
     },
   },
