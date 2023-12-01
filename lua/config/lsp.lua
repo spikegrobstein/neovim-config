@@ -67,17 +67,20 @@ require('mason-lspconfig').setup()
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-   clangd = {},
+  clangd = {},
   -- gopls = {},
   -- pyright = {},
   rust_analyzer = {
     keys = {
-      { "K",          "<cmd>RustHoverActions<cr>", desc = "Hover Actions (Rust)" },
-      { "<leader>cR", "<cmd>RustCodeAction<cr>",   desc = "Code Action (Rust)" },
-      { "<leader>dr", "<cmd>RustDebuggables<cr>",  desc = "Run Debuggables (Rust)" },
+      { 'K', '<cmd>RustHoverActions<cr>', desc = 'Hover Actions (Rust)' },
+      { '<leader>cR', '<cmd>RustCodeAction<cr>', desc = 'Code Action (Rust)' },
+      { '<leader>dr', '<cmd>RustDebuggables<cr>', desc = 'Run Debuggables (Rust)' },
+      { '<F4>', '<cmd>RustOpenExternalDocs<cr>', { desc = 'Open documentation', remap = true } },
+      { '<F5>', '<cmd>RustReloadWorkspace<CR>', { desc = 'Reload the rust workspace', remap = true } },
+      { '<F6>', '<cmd>RustCodeAction<CR>', { desc = 'Show code action menu.', remap = true } },
     },
     settings = {
-      ["rust-analyzer"] = {
+      ['rust-analyzer'] = {
         cargo = {
           allFeatures = true,
           loadOutDirsFromCheck = true,
@@ -86,21 +89,21 @@ local servers = {
         -- Add clippy lints for Rust.
         checkOnSave = {
           allFeatures = true,
-          command = "clippy",
-          extraArgs = { "--no-deps" },
+          command = 'clippy',
+          extraArgs = { '--no-deps' },
         },
         procMacro = {
           enable = true,
           ignored = {
-            ["async-trait"] = { "async_trait" },
-            ["napi-derive"] = { "napi" },
-            ["async-recursion"] = { "async_recursion" },
+            ['async-trait'] = { 'async_trait' },
+            ['napi-derive'] = { 'napi' },
+            ['async-recursion'] = { 'async_recursion' },
           },
         },
       },
     },
   },
-   tsserver = {},
+  tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
@@ -112,22 +115,18 @@ local servers = {
 }
 
 -- make lsp windows bordered
-local _border = "single"
+local _border = 'single'
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    border = _border
-  }
-)
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = _border,
+})
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.signature_help, {
-    border = _border
-  }
-)
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = _border,
+})
 
 vim.diagnostic.config {
-  float = { border = _border }
+  float = { border = _border },
 }
 
 -- Setup neovim lua configuration

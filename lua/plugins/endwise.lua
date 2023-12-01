@@ -1,3 +1,6 @@
 return {
-  "RRethy/nvim-treesitter-endwise"
+  "RRethy/nvim-treesitter-endwise",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter"
+  }
 }

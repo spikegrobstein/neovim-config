@@ -34,7 +34,7 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
 
   -- Detect tabstop and shiftwidth automatically
-  --'tpope/vim-sleuth',
+  'tpope/vim-sleuth',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -48,18 +48,50 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
   },
 
+  {
+    -- Autocompletion
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      -- Snippet Engine & its associated nvim-cmp source
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+
+      -- Adds LSP completion capabilities
+      'hrsh7th/cmp-nvim-lsp',
+
+      -- Adds a number of user-friendly snippets
+      'rafamadriz/friendly-snippets',
+    },
+    opts = function()
+      local cmp_window = require 'cmp.config.window'
+      return {
+        window = {
+          completion = cmp_window.bordered {
+            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
+          },
+          documentation = cmp_window.bordered {
+            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
+          },
+        },
+        --mapping = {
+        ---- pressing return should not select item
+        --["<CR>"] = vim.NIL,
+        --},
+      }
+    end,
+  },
+
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
-
-  -- Adds git related signs to the gutter, as well as utilities for managing changes
   {
+    -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -97,14 +129,28 @@ require('lazy').setup({
     },
   },
 
-  -- Set lualine as statusline
+  -- colorscheme
   {
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {
+      dim_inactive = true,
+      style = 'night',
+      on_colors = function(colors)
+        colors.border = colors.yellow
+      end,
+    },
+  },
+
+  {
+    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'onedark',
+        theme = 'tokyonight',
         component_separators = '|',
         section_separators = '',
       },
@@ -117,10 +163,32 @@ require('lazy').setup({
   ---- Enable `lukas-reineke/indent-blankline.nvim`
   ---- See `:help ibl`
   --main = 'ibl',
-  --opts = {
-  --scope = { enabled = false },
+  --opts = {},
   --},
-  --},
+
+  -- "gc" to comment visual regions/lines
+  --{ 'numToStr/Comment.nvim', opts = {} },
+
+  -- Fuzzy Finder (files, lsp, etc)
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
+      -- Only load if `make` is available. Make sure you have the system
+      -- requirements installed.
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        -- NOTE: If you are having trouble with this installation,
+        --       refer to the README for telescope-fzf-native for more instructions.
+        build = 'make',
+        cond = function()
+          return vim.fn.executable 'make' == 1
+        end,
+      },
+    },
+  },
 
   {
     -- Highlight, edit, and navigate code
@@ -133,6 +201,7 @@ require('lazy').setup({
 
   { import = 'plugins' },
 }, {
+  install = { colorscheme = { 'tokyonight', 'habamax' } },
 })
 
 require 'config.options'
@@ -142,6 +211,7 @@ require 'config.telescope'
 require 'config.treesitter'
 require 'config.lsp'
 require 'config.completion'
+
 require 'config.highlight-yank'
 
 require 'config.rust'
