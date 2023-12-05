@@ -53,3 +53,12 @@ vim.keymap.set("n", "<leader>l", ":Lazy<CR>", { desc = "Open Lazy" })
 -- map F8 to formatting documents.
 vim.keymap.set("n", "<F8>", vim.lsp.buf.format, { desc = "Format document", remap = true })
 
+-- keys for typescript files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "typescript", "javascript" },
+  callback = function()
+    local opts = { noremap = true, silent = true }
+    vim.keymap.set("n", "<F2>", ":lua require('neogen').generate()<CR>", opts)
+    vim.keymap.set("n", "<F8>", "<cmd>EslintFixAll<cr>", { desc = "Format document", remap = true })
+  end,
+})
