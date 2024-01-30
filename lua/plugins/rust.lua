@@ -1,8 +1,53 @@
 return {
-  'simrat39/rust-tools.nvim',
+  "mrcjkb/rustaceanvim",
+  version = "^3",
   dependencies = {
-    'neovim/nvim-lspconfig',
-    'nvim-lua/plenary.nvim',
-    'mfussenegger/nvim-dap',
+    "nvim-lua/plenary.nvim",
+    "mfussenegger/nvim-dap",
+    {
+      "lvimuser/lsp-inlayhints.nvim",
+      opts = {
+        inlay_hints = {
+          parameter_hints = {
+            prefix = ' ',
+            separator = ', ',
+          },
+          type_hints = {
+            prefix = '󰇙 ',
+            separator = ', ',
+          },
+        }
+      }
+    },
   },
+  ft = { "rust" },
+  config = function()
+    vim.g.rustaceanvim = {
+      inlay_hints = {
+        highlight = "NonText",
+        auto = true,
+        only_current_line = false,
+        show_parameter_hints = false,
+        --highlight = 'LspInlayHint',
+      },
+      tools = {
+        hover_actions = {
+          auto_focus = true,
+        },
+      },
+      server = {
+        on_attach = function(client, bufnr)
+          require("lsp-inlayhints").on_attach(client, bufnr)
+
+          vim.keymap.set('n', 'K', '<cmd>RustHoverActions<cr>', { desc = 'Hover Actions (Rust)' })
+          vim.keymap.set('n', '<leader>cR', '<cmd>RustCodeAction<cr>', { desc = 'Code Action (Rust)' })
+          vim.keymap.set('n', '<leader>dr', '<cmd>RustDebuggables<cr>', { desc = 'Run Debuggables (Rust)' })
+          vim.keymap.set('n', '<F4>', '<cmd>RustOpenExternalDocs<cr>', { desc = 'Open documentation', remap = true })
+          vim.keymap.set('n', '<F5>', '<cmd>RustReloadWorkspace<CR>',
+            { desc = 'Reload the rust workspace', remap = true })
+          vim.keymap.set('n', '<F6>', '<cmd>RustCodeAction<CR>', { desc = 'Show code action menu.', remap = true })
+        end
+      }
+    }
+  end
 }
