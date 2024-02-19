@@ -50,6 +50,8 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = tr
 
 vim.keymap.set("n", "<leader>l", ":Lazy<CR>", { desc = "Open Lazy" })
 
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover info' })
+
 -- map F8 to formatting documents.
 vim.keymap.set("n", "<F8>", vim.lsp.buf.format, { desc = "Format document", remap = true })
 
