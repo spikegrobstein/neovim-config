@@ -55,7 +55,7 @@ return {
           -- open docs (how?)
           --vim.keymap.set('n', '<F4>', '<cmd>RustOpenExternalDocs<cr>', { desc = 'Open documentation', remap = true })
           vim.keymap.set('n', '<F5>', ':RustLsp reloadWorkspace<CR>', { desc = 'Reload workspace', remap = true })
-          vim.keymap.set('n', '<F6>', ':RustLsp hover actions<CR>', { desc = 'Show code action menu.', remap = true })
+          vim.keymap.set('n', '<F6>', ':RustLsp codeAction<CR>', { desc = 'Show code action menu.', remap = true })
         end
       }
     }

@@ -55,6 +55,11 @@ vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover info' })
 -- map F8 to formatting documents.
 vim.keymap.set("n", "<F8>", vim.lsp.buf.format, { desc = "Format document", remap = true })
 
+vim.keymap.set("n", "<F9>", function()
+  vim.lsp.buf.rename()
+  vim.cmd('silent! wa') -- save all buffers
+end, { desc = "Rename symbol", remap = true })
+
 -- keys for typescript files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "typescript", "javascript" },
