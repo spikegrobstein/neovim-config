@@ -1,63 +1,80 @@
 return {
-  "mrcjkb/rustaceanvim",
-  version = "^4",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "mfussenegger/nvim-dap",
-    {
-      "lvimuser/lsp-inlayhints.nvim",
-      opts = {
-        inlay_hints = {
-          parameter_hints = {
-            prefix = ' ',
-            separator = ', ',
-          },
-          type_hints = {
-            prefix = '󰇙 ',
-            separator = ', ',
-          },
-        }
-      }
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^5', -- Recommended
+    lazy = false, -- This plugin is already lazy
+    ft = "rust",
+    dependencies = {
+      'williamboman/mason.nvim',
+      config = function()
+        require("mason").setup({})
+      end
     },
-  },
-  ft = { "rust" },
-  config = function()
-    vim.g.rustaceanvim = {
-      inlay_hints = {
-        highlight = "NonText",
-        auto = true,
-        only_current_line = false,
-        show_parameter_hints = false,
-        --highlight = 'LspInlayHint',
-      },
-      tools = {
-        hover_actions = {
-          auto_focus = false,
+    config = function ()
+      local mason_registry = require('mason-registry')
+      local codelldb = mason_registry.get_package("codelldb")
+      local extension_path = codelldb:get_install_path() .. "/extension/"
+      local codelldb_path = extension_path .. "adapter/codelldb"
+      local liblldb_path = extension_path.. "lldb/lib/liblldb.dylib"
+      local cfg = require('rustaceanvim.config')
+
+      vim.g.rustaceanvim = {
+        dap = {
+          adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
         },
-      },
-      server = {
-        on_attach = function(client, bufnr)
-          require("lsp-inlayhints").on_attach(client, bufnr)
-
-          vim.bo.tabstop = 4
-          vim.bo.shiftwidth = 4
-
-          --vim.keymap.set('n', 'K', '<cmd>RustHoverActions<cr>', { desc = 'Hover Actions (Rust)' })
-          --vim.keymap.set('n', '<leader>cR', '<cmd>RustCodeAction<cr>', { desc = 'Code Action (Rust)' })
-          --vim.keymap.set('n', '<leader>dr', '<cmd>RustDebuggables<cr>', { desc = 'Run Debuggables (Rust)' })
-          --vim.keymap.set('n', '<F4>', '<cmd>RustOpenExternalDocs<cr>', { desc = 'Open documentation', remap = true })
-
-          -- hover (how?)
-          vim.keymap.set('n', '<leader>c', ':RustLsp openCargo<CR>', { desc = 'Open Cargo.toml', remap = true })
-
-          vim.keymap.set('n', '<F2>', ':RustLsp renderDiagnostic<CR>', { desc = 'Show diagnostics', remap = true })
-
-          -- open docs (how?)
-          --vim.keymap.set('n', '<F4>', '<cmd>RustOpenExternalDocs<cr>', { desc = 'Open documentation', remap = true })
-          vim.keymap.set('n', '<F5>', ':RustLsp reloadWorkspace<CR>', { desc = 'Reload workspace', remap = true })
-          vim.keymap.set('n', '<F6>', ':RustLsp codeAction<CR>', { desc = 'Show code action menu.', remap = true })
-        end
       }
-    }
-  end
+    end
+  },
+
+  {
+    'rust-lang/rust.vim',
+    ft = "rust",
+    init = function ()
+      vim.g.rustfmt_autosave = 1
+    end
+  },
+
+  {
+    'mfussenegger/nvim-dap',
+    config = function()
+			local dap, dapui = require("dap"), require("dapui")
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
+		end,
+  },
+
+  {
+    'rcarriga/nvim-dap-ui', 
+    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+    config = function()
+			require("dapui").setup()
+		end,
+  },
+
+  {
+    'saecki/crates.nvim',
+    ft = {"toml"},
+    config = function()
+      require("crates").setup {
+        completion = {
+          cmp = {
+            enabled = true
+          },
+        },
+      }
+      require('cmp').setup.buffer({
+        sources = { { name = "crates" }}
+      })
+    end
+  },
 }
