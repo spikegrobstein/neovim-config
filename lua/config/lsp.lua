@@ -98,7 +98,6 @@ local servers = {
       --},
     --},
   --},
-  tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
