@@ -47,3 +47,5 @@ vim.api.nvim_command 'packadd termdebug'
 vim.g.termdebugger = 'rust-gdb'
 
 vim.cmd.colorscheme 'tokyonight-night'
+
+vim.o.winborder = "rounded"
