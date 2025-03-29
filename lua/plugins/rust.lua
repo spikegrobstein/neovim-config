@@ -1,24 +1,10 @@
 return {
   "mrcjkb/rustaceanvim",
-  version = "^4",
+  version = "^5",
+  lazy = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
     "mfussenegger/nvim-dap",
-    {
-      "lvimuser/lsp-inlayhints.nvim",
-      opts = {
-        inlay_hints = {
-          parameter_hints = {
-            prefix = ' ',
-            separator = ', ',
-          },
-          type_hints = {
-            prefix = '󰇙 ',
-            separator = ', ',
-          },
-        }
-      }
-    },
   },
   ft = { "rust" },
   config = function()
@@ -37,7 +23,6 @@ return {
       },
       server = {
         on_attach = function(client, bufnr)
-          require("lsp-inlayhints").on_attach(client, bufnr)
 
           vim.bo.tabstop = 4
           vim.bo.shiftwidth = 4

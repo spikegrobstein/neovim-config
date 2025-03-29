@@ -48,4 +48,7 @@ vim.g.termdebugger = 'rust-gdb'
 
 vim.cmd.colorscheme 'tokyonight-night'
 
+vim.diagnostic.config({ virtual_text = true })
+vim.lsp.inlay_hint.enable(true)
+
 vim.o.winborder = "rounded"
