@@ -66,6 +66,6 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     local opts = { noremap = true, silent = true }
     vim.keymap.set("n", "<F2>", ":lua require('neogen').generate()<CR>", opts)
-    vim.keymap.set("n", "<F8>", "<cmd>EslintFixAll<cr>", { desc = "Format document", remap = true })
+    vim.keymap.set("n", "<F8>", "<cmd>LspEslintFixAll<cr>", { desc = "Format document", remap = true })
   end,
 })
