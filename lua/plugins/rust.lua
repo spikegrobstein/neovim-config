@@ -1,10 +1,79 @@
 return {
   "mrcjkb/rustaceanvim",
-  version = "^5",
+  version = "^6",
   lazy = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "mfussenegger/nvim-dap",
+
+    {
+      "mfussenegger/nvim-dap",
+      dependencies = {
+        "rcarriga/nvim-dap-ui",
+        "theHamsta/nvim-dap-virtual-text",
+        "nvim-neotest/nvim-nio",
+        "williamboman/mason.nvim",
+      },
+      config = function()
+        local dap = require "dap"
+        local ui = require "dapui"
+
+        require("dapui").setup()
+        require("nvim-dap-virtual-text").setup()
+
+        --local rust_debugger = vim.fn.exepath "rust-lldb"
+        --if rust_debugger ~= "" then
+        --dap.adapters.rust_lldb = {
+        --type = "executable",
+        --command = rust_debugger,
+        --}
+
+        --dap.configurations.elixir = {
+        --{
+        --type = "rust_lldb",
+        --name = "Rust Debugger",
+        --task = "cargo run",
+        --request = "launch",
+        --projectDir = "${workspaceFolder}",
+        --exitAfterTaskReturns = false,
+        --debugAutoInterpretAllModules = false,
+        --},
+        --}
+        --end
+
+        -- breakpoints
+        vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
+        vim.keymap.set("n", "<leader>B", dap.clear_breakpoints)
+        vim.keymap.set("n", "<leader>gb", dap.run_to_cursor)
+
+        --toggle debugger UI
+        vim.keymap.set("n", "<leader>d", ui.toggle)
+
+        -- debugger stepping using shift F-keys
+        vim.keymap.set("n", "<S-F1>", dap.continue)
+        vim.keymap.set("n", "<S-F2>", dap.step_into)
+        vim.keymap.set("n", "<S-F3>", dap.step_over)
+        vim.keymap.set("n", "<S-F4>", dap.step_out)
+        vim.keymap.set("n", "<S-F5>", dap.step_back)
+        vim.keymap.set("n", "<S-F11>", dap.close)
+        vim.keymap.set("n", "<S-F12>", dap.restart)
+
+        -- ui hooks
+        dap.listeners.before.attach.dapui_config = function()
+          ui.open()
+        end
+        dap.listeners.before.launch.dapui_config = function()
+          ui.open()
+        end
+        dap.listeners.before.event_terminated.dapui_config = function()
+          ui.close()
+        end
+        dap.listeners.before.event_exited.dapui_config = function()
+          ui.close()
+        end
+      end
+    },
+
+    "julianolf/nvim-dap-lldb",
   },
   ft = { "rust" },
   config = function()
@@ -21,28 +90,6 @@ return {
           auto_focus = false,
         },
       },
-      server = {
-        on_attach = function(client, bufnr)
-
-          vim.bo.tabstop = 4
-          vim.bo.shiftwidth = 4
-
-          --vim.keymap.set('n', 'K', '<cmd>RustHoverActions<cr>', { desc = 'Hover Actions (Rust)' })
-          --vim.keymap.set('n', '<leader>cR', '<cmd>RustCodeAction<cr>', { desc = 'Code Action (Rust)' })
-          --vim.keymap.set('n', '<leader>dr', '<cmd>RustDebuggables<cr>', { desc = 'Run Debuggables (Rust)' })
-          --vim.keymap.set('n', '<F4>', '<cmd>RustOpenExternalDocs<cr>', { desc = 'Open documentation', remap = true })
-
-          -- hover (how?)
-          vim.keymap.set('n', '<leader>c', ':RustLsp openCargo<CR>', { desc = 'Open Cargo.toml', remap = true })
-
-          vim.keymap.set('n', '<F2>', ':RustLsp renderDiagnostic<CR>', { desc = 'Show diagnostics', remap = true })
-
-          -- open docs (how?)
-          --vim.keymap.set('n', '<F4>', '<cmd>RustOpenExternalDocs<cr>', { desc = 'Open documentation', remap = true })
-          vim.keymap.set('n', '<F5>', ':RustLsp reloadWorkspace<CR>', { desc = 'Reload workspace', remap = true })
-          vim.keymap.set('n', '<F6>', ':RustLsp codeAction<CR>', { desc = 'Show code action menu.', remap = true })
-        end
-      }
     }
   end
 }
