@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 return {
   "mrcjkb/rustaceanvim",
   version = "^6",
