@@ -46,13 +46,17 @@ end
 -- set up language servers
 vim.lsp.config('lua_ls', {
   settings = {
-    lua_ls = {
-      Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
+    Lua = {
+      diagnostics = {
+        globals = { 'vim' },
       },
+      workspace = {
+        checkThirdParty = false,
+        library = vim.api.nvim_get_runtime_file('', true),
+      },
+      telemetry = { enable = false },
     },
-  }
+  },
 })
 
 -- Setup neovim lua configuration
@@ -66,4 +70,3 @@ require('mason-lspconfig').setup()
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
