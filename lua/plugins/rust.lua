@@ -18,7 +18,7 @@ return {
         local ui = require "dapui"
 
         require("dapui").setup()
-        require("nvim-dap-virtual-text").setup()
+        require("nvim-dap-virtual-text").setup({})
 
         --local rust_debugger = vim.fn.exepath "rust-lldb"
         --if rust_debugger ~= "" then
