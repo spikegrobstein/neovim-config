@@ -43,6 +43,18 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+-- Setup neovim lua configuration
+require('neodev').setup()
+
+-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+vim.lsp.config('*', {
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
 -- set up language servers
 vim.lsp.config('lua_ls', {
   settings = {
@@ -59,14 +71,13 @@ vim.lsp.config('lua_ls', {
   },
 })
 
--- Setup neovim lua configuration
-require('neodev').setup()
-
 -- mason-lspconfig requires that these setup functions are called in this order
--- before setting up the servers.
+-- before enabling servers.
 require('mason').setup()
-require('mason-lspconfig').setup()
+require('mason-lspconfig').setup {
+  ensure_installed = {
+    'lua_ls',
+  },
+}
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+vim.lsp.enable 'lua_ls'

@@ -2,7 +2,7 @@
 return {
   "mrcjkb/rustaceanvim",
   version = "^6",
-  lazy = false,
+  ft = { 'rust' },
   dependencies = {
     "nvim-lua/plenary.nvim",
 
@@ -76,8 +76,7 @@ return {
 
     "julianolf/nvim-dap-lldb",
   },
-  ft = { "rust" },
-  config = function()
+  init = function()
     vim.g.rustaceanvim = {
       inlay_hints = {
         highlight = "NonText",
@@ -92,5 +91,5 @@ return {
         },
       },
     }
-  end
+  end,
 }
