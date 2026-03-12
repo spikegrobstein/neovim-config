@@ -210,6 +210,7 @@ require 'config.keymaps'
 require 'config.telescope'
 require 'config.treesitter'
 require 'config.lsp'
+require 'config.oxc'
 require 'config.completion'
 
 require 'config.highlight-yank'
