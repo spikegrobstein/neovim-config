@@ -6,6 +6,7 @@ require('nvim-treesitter').install {
   'bash',
   'c',
   'cpp',
+  'gitcommit',
   'go',
   'javascript',
   'jq',
@@ -26,10 +27,16 @@ require('nvim-treesitter').install {
   'yaml',
 }
 
--- Enable treesitter highlighting for all filetypes that have a parser
+-- Enable treesitter highlighting for filetypes with good query support.
+-- Neovim 0.12 already enables it for lua, markdown, help, and query via built-in ftplugins.
 vim.api.nvim_create_autocmd('FileType', {
+  pattern = {
+    'bash', 'sh', 'c', 'cpp', 'gitcommit', 'go', 'javascript', 'jq', 'json',
+    'make', 'python', 'regex', 'ron', 'rust', 'toml', 'tsx', 'typescript',
+    'vim', 'vimdoc', 'yaml',
+  },
   callback = function(args)
-    pcall(vim.treesitter.start, args.buf)
+    vim.treesitter.start(args.buf)
   end,
 })
 
