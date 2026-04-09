@@ -40,10 +40,11 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- Enable treesitter-based indentation (except for rust)
+-- Enable treesitter-based indentation (except for rust and shell)
 vim.api.nvim_create_autocmd('FileType', {
   callback = function(args)
-    if args.match ~= 'rust' then
+    local dominated = { rust = true, sh = true, bash = true }
+    if not dominated[args.match] then
       vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end
   end,
