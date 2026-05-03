@@ -7,6 +7,7 @@ require('nvim-treesitter').install {
   'c',
   'cpp',
   'diff',
+  'elixir',
   'gitcommit',
   'go',
   'javascript',
@@ -32,9 +33,26 @@ require('nvim-treesitter').install {
 -- Neovim 0.12 already enables it for lua, markdown, help, and query via built-in ftplugins.
 vim.api.nvim_create_autocmd('FileType', {
   pattern = {
-    'bash', 'sh', 'c', 'cpp', 'gitcommit', 'go', 'javascript', 'jq', 'json',
-    'make', 'python', 'regex', 'ron', 'rust', 'toml', 'tsx', 'typescript',
-    'vim', 'vimdoc', 'yaml',
+    'bash',
+    'sh',
+    'c',
+    'cpp',
+    'gitcommit',
+    'go',
+    'javascript',
+    'jq',
+    'json',
+    'make',
+    'python',
+    'regex',
+    'ron',
+    'rust',
+    'toml',
+    'tsx',
+    'typescript',
+    'vim',
+    'vimdoc',
+    'yaml',
   },
   callback = function(args)
     vim.treesitter.start(args.buf)
