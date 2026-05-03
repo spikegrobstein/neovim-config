@@ -7,6 +7,11 @@ return {
   --event = "LazyFile",
   opts = {
     delay = 200,
+    filetype_overrides = {
+      elixir = {
+        providers = { 'lsp', 'regex' },
+      },
+    },
   },
   keys = {
     { "]]", desc = "Next Reference" },
