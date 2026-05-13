@@ -6,6 +6,7 @@ require('nvim-treesitter').install {
   'bash',
   'c',
   'cpp',
+  'diff',
   'gitcommit',
   'go',
   'javascript',
