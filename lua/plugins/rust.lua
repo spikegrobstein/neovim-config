@@ -90,6 +90,24 @@ return {
           auto_focus = false,
         },
       },
+      server = {
+        -- Use the standalone (Homebrew) rust-analyzer, NOT the one PATH resolves
+        -- to (~/.local/bin/rust-analyzer -> rustup toolchain). The rustup build
+        -- panics on every textDocument/didSave ("Unable to get FileSourceRootInput
+        -- ... this is a bug"), which kills the server and forces a full ~2min
+        -- workspace re-index after each save. The standalone build survives saves.
+        cmd = { "/opt/homebrew/bin/rust-analyzer" },
+        default_settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              -- Analyze all `#[cfg(feature = "...")]` blocks as active so
+              -- feature-gated code keeps syntax highlighting and doesn't
+              -- emit false "unused import" diagnostics.
+              features = "all",
+            },
+          },
+        },
+      },
     }
   end,
 }
