@@ -1,13 +1,12 @@
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 
--- Install parsers (async, no-op if already installed)
-require('nvim-treesitter').install {
+-- Parsers are installed via :TSInstall or lazy.nvim's build step, not on every startup.
+local highlight_filetypes = {
   'bash',
   'c',
   'cpp',
   'diff',
-  'elixir',
   'gitcommit',
   'go',
   'javascript',
@@ -15,12 +14,11 @@ require('nvim-treesitter').install {
   'json',
   'lua',
   'make',
-  'markdown',
-  'markdown_inline',
   'python',
   'regex',
   'ron',
   'rust',
+  'sh',
   'toml',
   'tsx',
   'typescript',
@@ -32,30 +30,9 @@ require('nvim-treesitter').install {
 -- Enable treesitter highlighting for filetypes with good query support.
 -- Neovim 0.12 already enables it for lua, markdown, help, and query via built-in ftplugins.
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = {
-    'bash',
-    'sh',
-    'c',
-    'cpp',
-    'gitcommit',
-    'go',
-    'javascript',
-    'jq',
-    'json',
-    'make',
-    'python',
-    'regex',
-    'ron',
-    'rust',
-    'toml',
-    'tsx',
-    'typescript',
-    'vim',
-    'vimdoc',
-    'yaml',
-  },
+  pattern = highlight_filetypes,
   callback = function(args)
-    vim.treesitter.start(args.buf)
+    pcall(vim.treesitter.start, args.buf)
   end,
 })
 
