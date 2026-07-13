@@ -96,11 +96,11 @@ require('lazy').setup({
     opts = {
       -- See `:help gitsigns.txt`
       signs = {
-        change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
+        change = { text = '▎' },
+        delete = { text = '' },
+        topdelete = { text = '' },
+        changedelete = { text = '▎' },
+        untracked = { text = '▎' },
       },
       on_attach = function(bufnr)
         vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
@@ -206,6 +206,7 @@ require('lazy').setup({
   { import = 'plugins' },
 }, {
   install = { colorscheme = { 'tokyonight', 'habamax' } },
+  pkg = { sources = { 'lazy', 'packspec' } },
 })
 
 require 'config.options'
