@@ -35,7 +35,6 @@ vim.opt.wrap = false
 vim.opt.expandtab = true
 vim.opt.list = true
 vim.opt.pumblend = 10
-vim.opt.smartindent = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.tabstop = 2
