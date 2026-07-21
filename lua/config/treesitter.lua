@@ -1,6 +1,9 @@
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 
+-- Avoid briefly showing fallback syntax colors while asynchronous parsing catches up.
+vim.g._ts_force_sync_parsing = true
+
 -- Parsers are installed via :TSInstall or lazy.nvim's build step, not on every startup.
 local highlight_filetypes = {
   'bash',
