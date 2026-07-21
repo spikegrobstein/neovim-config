@@ -1,17 +1,17 @@
 -- better diagnostics list and others
 return {
-  "folke/trouble.nvim",
-  cmd = { "TroubleToggle", "Trouble" },
+  'folke/trouble.nvim',
+  cmd = { 'TroubleToggle', 'Trouble' },
   opts = { use_diagnostic_signs = true },
   keys = {
-    { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Workspace Diagnostics (Trouble)" },
-    { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
-    { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+    { '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Workspace Diagnostics (Trouble)' },
+    { '<leader>xL', '<cmd>Trouble loclist toggle<cr>', desc = 'Location List (Trouble)' },
+    { '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix List (Trouble)' },
     {
-      "[q",
+      '[q',
       function()
-        if require("trouble").is_open() then
-          require("trouble").previous({ skip_groups = true, jump = true })
+        if require('trouble').is_open() then
+          require('trouble').previous { skip_groups = true, jump = true }
         else
           local ok, err = pcall(vim.cmd.cprev)
           if not ok then
@@ -19,13 +19,13 @@ return {
           end
         end
       end,
-      desc = "Previous trouble/quickfix item",
+      desc = 'Previous trouble/quickfix item',
     },
     {
-      "]q",
+      ']q',
       function()
-        if require("trouble").is_open() then
-          require("trouble").next({ skip_groups = true, jump = true })
+        if require('trouble').is_open() then
+          require('trouble').next { skip_groups = true, jump = true }
         else
           local ok, err = pcall(vim.cmd.cnext)
           if not ok then
@@ -33,11 +33,10 @@ return {
           end
         end
       end,
-      desc = "Next trouble/quickfix item",
+      desc = 'Next trouble/quickfix item',
     },
   },
   dependencies = {
-    'nvim-tree/nvim-web-devicons'
-  }
+    'nvim-tree/nvim-web-devicons',
+  },
 }
-

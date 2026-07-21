@@ -27,7 +27,9 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- NOTE: signature help lives on <leader>k (normal) and the built-in <C-s>
+  -- (insert) so it doesn't clash with the <C-k> window-navigation keymap.
+  nmap('<leader>k', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -50,12 +52,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- Setup neovim lua configuration
-require('neodev').setup()
+-- Lua LS runtime/library setup is handled by lazydev.nvim (see lua/plugins/lazydev.lua).
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+-- blink.cmp augments the default LSP client capabilities (completion, etc.);
+-- broadcast the enhanced set to every server. Fall back to the built-in
+-- capabilities if blink isn't installed yet (e.g. before the first :Lazy sync).
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+local ok, blink = pcall(require, 'blink.cmp')
+if ok then
+  capabilities = blink.get_lsp_capabilities(capabilities)
+end
 
 vim.lsp.config('*', {
   capabilities = capabilities,
@@ -89,3 +95,67 @@ require('mason-lspconfig').setup {
 }
 
 vim.lsp.enable 'lua_ls'
+
+-- [[ Consistent function-key mappings across every language ]]
+-- LspAttach fires for every client no matter how it was started (including
+-- rustaceanvim's rust-analyzer), so these work everywhere without needing
+-- per-language ftplugin overrides. Only the two operations that have no
+-- generic LSP equivalent (open external docs, reload workspace) get a small
+-- rust-analyzer-specific branch.
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('user-lsp-fkeys', { clear = true }),
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local map = function(lhs, rhs, desc)
+      vim.keymap.set('n', lhs, rhs, { buffer = bufnr, desc = desc })
+    end
+
+    -- F6: code action (fix un-imported symbols, fill match arms, quickfixes, ...)
+    map('<F6>', vim.lsp.buf.code_action, 'LSP: Code action / fix')
+    -- F8: format the buffer
+    map('<F8>', function()
+      vim.lsp.buf.format()
+    end, 'LSP: Format')
+    -- F9: rename symbol, then save all buffers
+    map('<F9>', function()
+      vim.lsp.buf.rename()
+      vim.cmd 'silent! wa'
+    end, 'LSP: Rename symbol')
+
+    if client and client.name == 'rust-analyzer' then
+      -- rust-analyzer ships richer, dedicated versions of these.
+      map('<F4>', function()
+        vim.cmd.RustLsp 'openDocs'
+      end, 'Rust: Open docs.rs for symbol')
+      map('<F5>', function()
+        vim.cmd.RustLsp 'reloadWorkspace'
+      end, 'Rust: Reload workspace')
+      map('<F6>', function()
+        vim.cmd.RustLsp 'codeAction'
+      end, 'Rust: Code action (grouped)')
+
+      -- Auto-format Rust on save so indentation stays correct without pressing
+      -- F8 / running `cargo fmt` manually.
+      if client:supports_method 'textDocument/formatting' then
+        vim.api.nvim_create_autocmd('BufWritePre', {
+          group = vim.api.nvim_create_augroup('user-rust-format-' .. bufnr, { clear = true }),
+          buffer = bufnr,
+          callback = function()
+            vim.lsp.buf.format { async = false, id = client.id }
+          end,
+        })
+      end
+    else
+      -- Generic fallback for every other language: restart the buffer's LSP.
+      map('<F5>', function()
+        for _, c in ipairs(vim.lsp.get_clients { bufnr = bufnr }) do
+          vim.lsp.stop_client(c.id, true)
+        end
+        vim.defer_fn(function()
+          vim.cmd 'edit'
+        end, 200)
+      end, 'LSP: Restart client')
+    end
+  end,
+})

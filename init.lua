@@ -8,7 +8,7 @@ vim.g.maplocalleader = ' '
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system {
     'git',
     'clone',
@@ -49,47 +49,9 @@ require('lazy').setup({
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
     },
   },
 
-  {
-    -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
-
-      -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
-    },
-    opts = function()
-      local cmp_window = require 'cmp.config.window'
-      return {
-        window = {
-          completion = cmp_window.bordered {
-            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
-          },
-          documentation = cmp_window.bordered {
-            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
-          },
-        },
-        --mapping = {
-        ---- pressing return should not select item
-        --["<CR>"] = vim.NIL,
-        --},
-      }
-    end,
-  },
-
-  -- Useful plugin to show you pending keybinds.
-  --{ 'folke/which-key.nvim', opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -112,7 +74,7 @@ require('lazy').setup({
             return ']c'
           end
           vim.schedule(function()
-            gs.next_hunk()
+            gs.nav_hunk 'next'
           end)
           return '<Ignore>'
         end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
@@ -121,7 +83,7 @@ require('lazy').setup({
             return '[c'
           end
           vim.schedule(function()
-            gs.prev_hunk()
+            gs.nav_hunk 'prev'
           end)
           return '<Ignore>'
         end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
@@ -156,18 +118,6 @@ require('lazy').setup({
       },
     },
   },
-
-  --{
-  ---- Add indentation guides even on blank lines
-  --'lukas-reineke/indent-blankline.nvim',
-  ---- Enable `lukas-reineke/indent-blankline.nvim`
-  ---- See `:help ibl`
-  --main = 'ibl',
-  --opts = {},
-  --},
-
-  -- "gc" to comment visual regions/lines
-  --{ 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -216,11 +166,8 @@ require 'config.telescope'
 require 'config.treesitter'
 require 'config.lsp'
 require 'config.oxc'
-require 'config.completion'
 
 require 'config.highlight-yank'
-
-require 'config.rust'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

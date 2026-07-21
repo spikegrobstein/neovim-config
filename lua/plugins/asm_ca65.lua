@@ -1,3 +1,3 @@
 return {
-  "maxbane/vim-asm_ca65"
+  'maxbane/vim-asm_ca65',
 }

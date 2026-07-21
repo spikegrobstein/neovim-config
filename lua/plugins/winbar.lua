@@ -1,5 +1,5 @@
 return {
-  "fgheng/winbar.nvim",
+  'fgheng/winbar.nvim',
   opts = {
     enabled = true,
 
