@@ -18,7 +18,7 @@ local package_json_sections = {
 local find_package_json = function(bufnr)
   local path = vim.api.nvim_buf_get_name(bufnr)
   if path == '' then
-    path = vim.loop.cwd()
+    path = vim.uv.cwd()
   end
 
   return vim.fs.find('package.json', {

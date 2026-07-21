@@ -1,3 +1,3 @@
 return {
-  "drzel/quakec.vim"
+  'drzel/quakec.vim',
 }

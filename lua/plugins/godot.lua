@@ -1,4 +1,4 @@
 return {
-  "lommix/godot.nvim",
-  dependencies = { "mfussenegger/nvim-dap" }
+  'lommix/godot.nvim',
+  dependencies = { 'mfussenegger/nvim-dap' },
 }
