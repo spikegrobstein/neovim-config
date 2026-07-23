@@ -27,6 +27,7 @@ return {
       ['<C-d>'] = { 'scroll_documentation_up', 'fallback' },
       ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
       ['<C-e>'] = { 'hide', 'fallback' },
+      ['<C-y>'] = { 'accept', 'fallback' },
       ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       -- <Tab>: next item, else jump forward in a snippet, else fall through.
       ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
